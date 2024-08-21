@@ -1,0 +1,36 @@
+ Read me file :
+ 
+Goroutines :  These allow you to start up and run other threads of execution concurrently within your program. 
+
+
+Channels : These are used to communicate between goroutine  and synchronize by sending and receiving values.
+ Operations:==
+
+     i:Sending: channel <- value: Sends a value to the channel.
+
+     ii:Receiving: value := <-channel: Receives a value from the channel.
+
+     iii:Closing: close(channel): Closes the channel, indicating that no more values will be sent.
+
+Types of Channels :
+
+1:Unbuffered Channels: These channels have a capacity of zero,,that means it does not have any values . Sending a value will  blocks the sender until a receiver is ready to receive it. Similarly, receiving from an unbuffered channel blocks the receiver until a sender sends a value.
+
+2:Buffered Channels: These channels have a non-zero capacity, which allows to store values until a specified capacity . Senders can continue sending values to a buffered channel until it is full, and receivers can continue receiving values until it is empty.
+
+Differences:
+
+1..Blocking Behavior: Unbuffered channels always block senders and receivers, while buffered channels only block when the channel is full or empty.
+
+2..Capacity: Unbuffered channels have a capacity of zero, while buffered channels can have any non-zero capacity.
+
+3..Synchronization: Unbuffered channels provide stronger synchronization between goroutines, as senders and receivers must wait for each other. Buffered channels offer more flexibility, as they can decouple senders and receivers to some extent.
+
+Choosing the Right Channel Type:
+
+1:: Unbuffered Channels -->When you need strong synchronization.
+2:: Buffered Channels-->When you want to decouple senders and receivers,When you need to control the flow of data.
+
+so ,in conclusion it completely depends on what  your application depends on your specific requirements and the desired behavior of your concurrent system.
+
+
