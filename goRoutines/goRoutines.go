@@ -1,10 +1,10 @@
-package main
+package goRoutines
 
 import (
 	"fmt"
 )
 
-func sumRange(start, end int, ch chan<- int) {
+func SumRange(start, end int, ch chan<- int) {
 	total := 0
 	for i := start; i <= end; i++ {
 		total += i
@@ -12,7 +12,7 @@ func sumRange(start, end int, ch chan<- int) {
 	ch <- total
 }
 
-func main() {
+func Parllel() {
 
 	start := 1
 	end := 10
@@ -21,8 +21,8 @@ func main() {
 
 	mid := (start + end) / 2
 
-	go sumRange(start, mid, ch)
-	go sumRange(mid+1, end, ch)
+	go SumRange(start, mid, ch)
+	go SumRange(mid+1, end, ch)
 
 	sum1 := <-ch
 	sum2 := <-ch

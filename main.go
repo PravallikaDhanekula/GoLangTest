@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"golangfiles/goRoutines"
 )
 
 func Numbers(ch chan<- int) {
@@ -30,4 +31,7 @@ func main() {
 		go PrimeNumbers(numbers, newChannel, prime)
 		numbers = newChannel
 	}
+	fmt.Println("calling the parllel sum function :")
+	goRoutines.Parllel()
+
 }
