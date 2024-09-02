@@ -1,37 +1,30 @@
 package main
 
 import (
-	"fmt"
-	"golangfiles/goRoutines"
+	"database/sql"
+	"golangfiles/api"
+
+	"log"
+	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-func Numbers(ch chan<- int) {
-	for i := 2; i < 100; i++ {
-		ch <- i
-	}
-}
-
-func PrimeNumbers(in <-chan int, out chan<- int, prime int) {
-	for {
-		num := <-in
-		if num%prime != 0 {
-			out <- num
-		}
-	}
-}
-
 func main() {
-	numbers := make(chan int)
-	go Numbers(numbers)
+	dsn := "root:dhanekula@tcp(localhost:3306)/Library"
+	db, err := sql.Open("mysql", dsn)
 
-	for i := 0; i < 10; i++ {
-		prime := <-numbers
-		fmt.Println(prime)
-		newChannel := make(chan int)
-		go PrimeNumbers(numbers, newChannel, prime)
-		numbers = newChannel
+	if err != nil {
+		log.Fatal(err)
 	}
-	fmt.Println("calling the parllel sum function :")
-	goRoutines.Parllel()
 
+	defer db.Close()
+	if err := db.Ping(); err != nil {
+		log.Fatal(err)
+	}
+
+	api.RegisterRouter(db)
+
+	log.Println("serever strt on port 8080:")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
